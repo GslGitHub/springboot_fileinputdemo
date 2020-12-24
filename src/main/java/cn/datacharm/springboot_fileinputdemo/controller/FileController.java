@@ -4,12 +4,17 @@ package cn.datacharm.springboot_fileinputdemo.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import jdk.nashorn.internal.ir.debug.JSONWriter;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Controller
@@ -53,7 +58,7 @@ public class FileController {
             System.out.println(path);
             dest= new File(path + fileName);
         }else {
-            String path = "/webapps/img/";
+            String path = getUploadPath()+"/";
             dest= new File(path + fileName);
         }
         model.addAttribute("src","img/"+fileName);
@@ -63,7 +68,33 @@ public class FileController {
         } catch (IOException e) {
             return JSON.toJSONString("上传失败！");
         }
+    }
+    @javax.annotation.Resource
+    private ResourceLoader resourceLoader;
+    @RequestMapping("/{fileName:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> show(@PathVariable String fileName){
+        try
+        {
+            //resourceLoader.getResource("file:" + uploadPicturePath + fileName) 返回指定路径的资源句柄，这里返回的就是URL [file:D:/springboot/upload/test.png]
+            //ResponseEntity.ok(T) 返回指定内容主体
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + getUploadPath()+"/" + fileName));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    private String getUploadPath() {
+        File path = null;
+        try {
+            path = new File(ResourceUtils.getURL("classpath:").getPath());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (!path.exists()) path = new File("");
+        File upload = new File(path.getAbsolutePath(), "static/upload/");
+        if (!upload.exists()) upload.mkdirs();
+        return upload.getAbsolutePath();
     }
 
 }

@@ -19,9 +19,9 @@ function initFileInput(ctrlName,url) {
         dropZoneEnabled: true,//是否显示拖拽区域
         minImageWidth: 50, //图片的最小宽度
         minImageHeight: 50,//图片的最小高度
-        maxImageWidth: 1000,//图片的最大宽度
-        maxImageHeight: 1000,//图片的最大高度
-        maxFileSize: 1024,//单位为kb，如果为0表示不限制文件大小
+        maxImageWidth: 10000,//图片的最大宽度
+        maxImageHeight: 10000,//图片的最大高度
+        maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
         minFileCount: 1, //每次上传允许的最少文件数。如果设置为0，则表示文件数是可选的。默认为0
         maxFileCount: 0, //每次上传允许的最大文件数。如果设置为0，则表示允许的文件数是无限制的。默认为0
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",//当检测到用于预览的不可读文件类型时，将在每个预览文件缩略图中显示的图标。默认为<i class="glyphicon glyphicon-file"></i>
