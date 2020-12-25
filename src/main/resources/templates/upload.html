@@ -1,18 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>上传Demo</title>
+    <script th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <script th:src="@{js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{css/fileinput.css}">
+    <script th:src="@{js/fileinput.js}"></script>
+    <script th:src="@{js/theme.js}"></script>
+    <script th:src="@{js/zh.js}"></script>
 
-    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>单文件上传</title>
 
 </head>
 <body>
-<form method="post" action="/uploadImg" enctype="multipart/form-data">
-    <input type="file" name="file" accept="image/*"><br>
-    <input type="submit" value="提交">
+<img src="http://localhost:8081/0e56d9159b110cbfceff9eb98d0ae3c3.jpg">
+<img src="/img/pig.jpg" class="img-circle center-block"
+     alt="Cinque Terre" width="100" height="100">
+
+<button type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#exampleModal">
+    模态框内上传
+</button>
+<br>
+
+<form enctype="multipart/form-data">
+    <div  class="text-center">
+        <input id="simple" name="file"  type="file" multiple>
+    </div>
 </form>
 
+<!--上传-隐藏预览框-->
+<h2 class="text-center">隐藏预览框+单文件上传</h2>
+<form enctype="multipart/form-data">
+    <div style="width: 500px;" class="center-block">
+        <input id="upload" type="file" class="file text-center"  name="file"
+               data-show-preview="false"  style="width: 500px"/>
+    </div>
+</form>
+
+<h2 class="text-center">拖放+多文件上传</h2>
+<form enctype="multipart/form-data">
+    <div class="form-group center-block" style="width: 800px;" >
+        <input id="file" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1"
+               data-max-file-count="10" name="file" accept="image/*" >
+    </div>
+</form>
+
+<h2 class="text-center">拖放+点击+多文件上传</h2>
+<form enctype="multipart/form-data">
+    <div class="form-group center-block" style="width: 800px;" >
+        <input id="test1" name="file" type="file" class="file" data-browse-on-zone-click="true">
+    </div>
+</form>
+
+<script src="js/initFileInput.js"></script>
+<script>
+    //初始化fileinput
+    initFileInput("upload","/uploadImg");
+    initFileInput("file","/uploadImg");
+    initFileInput("test1","/uploadImg");
+    initFileInput("modelInput","/uploadImg");
+
+</script>
 </body>
 </html>

@@ -1,0 +1,1 @@
+package com.filedemo.dao;import com.filedemo.dto.BusDTO;import org.apache.ibatis.annotations.Mapper;import org.springframework.stereotype.Repository;@Mapperpublic interface BusDAO {    void addBus(BusDTO bus);}
